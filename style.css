@@ -1,0 +1,756 @@
+    :root {
+
+        /* ===== J.S. Bach / oxblood palette ===== */
+
+        --bg: #efe7df;
+        /* warm parchment */
+
+        --card: #f8f4ee;
+        /* manuscript paper */
+
+        --border: #9d8577;
+        /* warm archival border */
+
+        --ink: #191411;
+        /* engraving ink */
+
+        --muted: #5f4d46;
+        /* faded sepia-red */
+
+        /* Main accent family */
+        --gold: #6e2f2f;
+        /* oxblood */
+
+        --gold-light: #a14b4b;
+        /* illuminated red */
+
+        --selected-bg: #dcc0b7;
+        /* dusty rose parchment */
+
+        --selected-border: #7b3535;
+
+        --selected-ink: #1b1412;
+
+        --grey: #e8ddd5;
+
+        /* compatibility aliases */
+        --butter: var(--selected-bg);
+        --gold-ink: var(--selected-ink);
+    }
+
+    html,
+    body {
+        height: 100%
+    }
+
+    body {
+
+        font-family: "Source Sans 3", sans-serif;
+        margin: 12px;
+        background-color: var(--bg);
+
+
+        color: var(--ink)
+    }
+
+    .card {
+        background: var(--card);
+
+        border: 1px solid var(--border);
+
+        border-radius: 4px;
+
+        padding: 10px;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.45),
+            0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap
+    }
+
+    .small {
+        font-size: .9rem;
+        color: var(--muted)
+    }
+
+    .row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap
+    }
+
+    .spacer {
+        flex: 1
+    }
+
+    /* ======= Title pills ======= */
+    .title-badges {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap
+    }
+
+    .title-pill {
+        padding: 6px 10px;
+        border-radius: 10px;
+        background: #fff;
+        border: 1px solid var(--border);
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 0.02em;
+        font-size: 1.05rem;
+        font-size: .92rem;
+        font-weight: 600;
+        white-space: nowrap
+    }
+
+    #keyPill {
+        display: inline-block;
+    }
+
+    .title-pill small {
+        color: var(--muted);
+        font-weight: 500;
+        margin-left: 6px
+    }
+
+    /* Make header a flex row and vertically center items */
+    header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        /* optional spacing between items */
+        padding: 8px 12px;
+        /* adjust to match your layout */
+    }
+
+    /* Right-align the studio credit pill in the header */
+    .studio-credit-pill {
+        margin-left: auto;
+        /* pushes this pill to the far right in the header flex row */
+        white-space: nowrap;
+        /* keep it on one line if possible */
+        font-weight: 600;
+        /* same visual weight as the other pills */
+        display: inline-flex;
+        /* keeps vertical centering consistent */
+        align-items: center;
+    }
+
+    /* Push the studio credit to the far right */
+    .studio-credit {
+        margin-left: auto;
+        /* the magic that forces it to the right */
+        font-weight: 700;
+        /* keep your bold weight */
+        white-space: nowrap;
+        /* prevent awkward wrapping on wide screens */
+        font-size: 0.95rem;
+        /* tweak to taste */
+    }
+
+    /* Responsive: on narrow screens, wrap and make the credit full width and right aligned */
+    @media (max-width: 640px) {
+        header {
+            flex-wrap: wrap;
+            /* allow items to break to next line */
+            gap: 6px;
+        }
+
+        .studio-credit {
+            margin-left: 0;
+            /* remove auto so it no longer tries to occupy flex gap */
+            order: 3;
+            /* put it after other header items (adjust if needed) */
+            width: 100%;
+            /* full width line */
+            text-align: right;
+            /* keep the text visually right-justified on its own line */
+            padding-top: 6px;
+            /* tiny spacing from row above */
+        }
+    }
+
+    /* ===== Row: Category + Accidentals ===== */
+    #rowCategories {
+        display: flex;
+        gap: 8px;
+        margin-top: 6px;
+        align-items: flex-start;
+    }
+
+    /* Make both cards shrink to content */
+    #rowCategories .group {
+        flex: 0 0 auto;
+        width: auto;
+        white-space: nowrap;
+    }
+
+    /* ======= Buttons ======= */
+    .btn {
+
+        padding: 4px 8px;
+
+        border-radius: 4px;
+
+        border: 1px solid var(--border);
+
+        background: var(--grey);
+
+        color: var(--ink);
+
+        cursor: pointer;
+
+        font-size: .82rem;
+
+        line-height: 1;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+
+        transition: 0.1s ease;
+    }
+
+    /* Selected / toggled states across the app (chips, radios, etc.) */
+    .btn.selected,
+    .level-btn.toggled,
+    .level-btn.selected,
+    .include-btn.toggled,
+    .radio-inline label.selected,
+    [data-role="show"] .level-btn.toggled {
+        background: var(--selected-bg);
+        border-color: var(--selected-border);
+        color: var(--selected-ink);
+    }
+
+    /* Make the select all/none buttons black (not grey) */
+    #selectAllKeys,
+    #selectNoneKeys,
+    #includeSelectAll,
+    #includeSelectNone {
+        color: var(--ink);
+        background: #fff;
+        border-color: var(--border);
+        font-weight: 600;
+    }
+
+    /* ======= Chips container line ======= */
+    .line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 8px
+    }
+
+    .group {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        background: #f8f3e8;
+
+        border: 1px solid var(--border);
+
+        border-radius: 4px;
+
+        padding: 6px 8px;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .group .small {
+
+        font-family: "Cormorant Garamond", serif;
+
+        font-size: .95rem;
+
+        font-weight: 700;
+
+        letter-spacing: 0.03em;
+
+        color: #4a3d2d;
+    }
+
+    /* ======= Row 1 ======= */
+    .new-bass-btn {
+
+        padding: 8px 14px;
+
+        border-radius: 4px;
+
+        background:
+            linear-gradient(to bottom,
+                #9e3e3e,
+                #7c2d2d);
+
+        color: #f8f4ef;
+
+        border: 1px solid #5e1f1f;
+
+        font-family: "Cormorant Garamond", serif;
+
+        font-size: 1.12rem;
+
+        letter-spacing: 0.04em;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.14),
+            0 2px 5px rgba(0, 0, 0, 0.18);
+
+        transition: 0.12s ease;
+    }
+
+    .new-bass-btn:hover {
+
+        background:
+            linear-gradient(to bottom,
+                #b24747,
+                #8a3232);
+
+        transform: translateY(-1px);
+    }
+
+    .new-bass-btn:active {
+
+        background:
+            linear-gradient(to bottom,
+                #682424,
+                #531919);
+
+        transform: translateY(1px);
+    }
+
+    #keyPill .key-label {
+        font-weight: 700;
+        /* bold label */
+        margin-right: 4px;
+    }
+
+    #keyPill #keyPillValue {
+        font-weight: 400;
+        /* normal-weight key name */
+    }
+
+    /* ======= Viewer ======= */
+    #viewer {
+        margin-top: 8px;
+    }
+
+    /* Tagline image under the viewer */
+    #modeTagline img.tagline-img {
+        max-height: 101px;
+        /* adjust if you want larger/smaller */
+        height: auto;
+        display: block;
+        margin: 2px 0 0 0;
+        /* left-justified (no auto-centering) */
+    }
+
+    #viewer.card {
+
+        padding-top: 14px;
+
+        padding-bottom: 14px;
+
+        background: #ffffff;
+
+        border: 1px solid #d9d9d9;
+
+        border-radius: 2px;
+
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Slightly smaller gap above the viewer card */
+    #viewer {
+        margin-top: 4px;
+    }
+
+
+    /* Verovio fit-to-viewer helpers */
+    #viewer {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    #svg {
+
+        display: block;
+
+        background: #ffffff;
+    }
+
+    #svg svg {
+
+        display: block;
+
+        width: auto;
+        height: auto;
+
+        margin: 0;
+
+        background: #ffffff;
+    }
+
+    /* Keep historical text in DOM (for JS to touch) but invisible */
+    .visually-hidden {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(1px, 1px, 1px, 1px);
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Hide UI elements completely (NO layout space, JS-safe)     */
+    /* Use this instead of visibility:hidden                      */
+    .hidden-layout {
+        display: none !important;
+    }
+
+    /* ---------------------------------------------------------- */
+
+    /* ======= Row 3: Key Range + Scale + Spacing (no outer big card) ======= */
+    .key-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 6px;
+    }
+
+    .key-btn {
+        background: var(--grey);
+        border: 1px solid var(--border);
+        color: #222;
+        padding: 6px 8px;
+        border-radius: 10px;
+        font-weight: 500;
+        cursor: pointer;
+        min-width: 36px;
+        min-height: 28px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
+        font-size: .75rem;
+        line-height: 1.0
+    }
+
+    .key-btn.selected {
+        background: var(--butter);
+        border-color: var(--gold);
+        color: var(--gold-ink)
+    }
+
+    .small-pill {
+        background: #fff;
+        border: 1px solid var(--border);
+        padding: 4px 7px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: .82rem;
+        line-height: 1
+    }
+
+    /* Hide the sliders visually (keep in DOM for existing JS) */
+    .slider {
+        display: none !important;
+    }
+
+    /* ======= Row 4: Filters (no big outer card) ======= */
+    /* Hide labels “Dir:”, “Mode:”, “Lvl:” per request */
+    .group[data-role="key-mode"] .small,
+    .group[data-role="category"] .small,
+    .group[data-role="level"] .small {
+        display: none
+    }
+
+    /* Accidentals radios styled to look like chips, mutually exclusive by native radio */
+    .radio-inline {
+        display: flex;
+        align-items: center;
+        gap: 6px
+    }
+
+    .radio-inline input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0
+    }
+
+    .radio-inline label {
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid var(--grey);
+        background: var(--grey);
+        color: #222;
+        font-size: .82rem;
+        line-height: 1;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .radio-inline label.selected {
+        background: var(--butter);
+        border-color: var(--gold);
+        color: var(--gold-ink)
+    }
+
+    /* NEW: Keep the FB placement card tidy and chip-highlight the selected label */
+    .group[data-role="fig-place"] {
+        /* already top-aligned via inline; keep here for clarity */
+    }
+
+    #figPlaceInline label.selected {
+        background: var(--butter);
+        border-color: var(--gold);
+        color: var(--gold-ink);
+    }
+
+    /* If you ever show native radios, this accent helps. Your radios are hidden, so optional. */
+    input[type="radio"] {
+        accent-color: var(--gold);
+    }
+
+    /* ======= Include spelled-tonics grid (replaces previous pc-grid) ======= */
+    .include-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        max-width: 720px
+    }
+
+    .include-btn {
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        font-size: .82rem;
+        font-weight: 600;
+    }
+
+    .include-btn.toggled {
+        background: var(--butter);
+        border-color: var(--gold);
+        color: var(--gold-ink)
+    }
+
+    /* ======= Transpose/Octave/Enharmonic — keep in DOM, hide visually ======= */
+    .controls-row {
+        display: none !important;
+    }
+
+    /* ======= Humdrum collapse helper ======= */
+    .humdrum-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        border: 1px solid var(--border);
+        color: #333;
+        border-radius: 10px;
+        padding: 6px 10px;
+        font-size: .92rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 8px
+    }
+
+    .humdrum-toggle:hover {
+        background: #fdfdfd
+    }
+
+    .humdrum-chevron {
+        font-weight: 800;
+        color: #555
+    }
+
+    .humdrum-original-label {
+        display: none !important
+    }
+
+    /* ======= Logo ======= */
+    #logoAfterFilters img {
+        max-width: 66%;
+        height: auto;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Unified selected state for all chips/buttons */
+    .key-btn.selected,
+    .include-btn.toggled,
+    .btn.selected,
+    .level-btn.toggled,
+    .radio-inline label.selected,
+    [data-role="show"] .level-btn.toggled {
+        background: var(--selected-bg) !important;
+        border-color: var(--selected-border) !important;
+        color: var(--selected-ink) !important;
+    }
+
+    /* Base state: soft silver-grey, not white */
+    .key-btn,
+    .include-btn,
+    .level-btn,
+    .btn,
+    .radio-inline label {
+        background: var(--grey);
+        border-color: var(--border);
+        color: var(--ink);
+    }
+
+    /* ===== Scoreboard ===== */
+    #scoreTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #scoreTable th,
+    #scoreTable td {
+        border: 1px solid var(--border);
+        padding: 4px 6px;
+        font-size: .82rem;
+        text-align: center;
+        font-variant-numeric: tabular-nums;
+    }
+
+    /* Highlight grand total cell */
+    .grand-total-cell {
+        background: var(--selected-bg);
+        border-color: var(--selected-border);
+        color: var(--selected-ink);
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    #scoreTable thead th {
+        background: var(--card);
+    }
+
+    #scoreTable th:first-child,
+    #scoreTable td:first-child {
+        text-align: left;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+
+    /* === Scoreboard totals styling === */
+    #scoreTable tr.totals-row th,
+    #scoreTable tr.totals-row td {
+        font-style: italic;
+    }
+
+    #scoreTable th.totals-col,
+    #scoreTable td.totals-col {
+        font-style: italic;
+    }
+
+    #scoreTable th:first-child,
+    #scoreTable td:first-child {
+        width: auto;
+        white-space: nowrap;
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Double Length card — shrink-wrap to label + Off/On only   */
+    /* ---------------------------------------------------------- */
+    .group[data-role="double-length"] {
+        display: inline-flex;
+        /* prevents block stretching */
+        flex: 0 0 auto;
+        /* do NOT grow or shrink */
+        width: max-content;
+        /* exact width of contents */
+        white-space: nowrap;
+        /* keep label + radios inline */
+        align-items: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        /* match Scale/Spacing height */
+    }
+
+    /* ===== Row 3 layout FIX ===== */
+
+    /* Keep everything on one row */
+    #row3 {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .group[data-role="key-range"] {
+        flex: 0 1 auto;
+        /* allow shrinking but NOT growing */
+        min-width: 0;
+    }
+
+    /* Keep Scale + Spacing compact */
+    .group[data-role="scale"],
+    .group[data-role="spacing"] {
+        flex: 0 0 auto;
+    }
+
+    /* Double Length = small, fixed-size card */
+    .group[data-role="double-length"] {
+        flex: 0 0 auto;
+        white-space: nowrap;
+    }
+
+    /* Force Row 3 to behave like a single toolbar */
+    #row3 {
+        display: flex;
+        align-items: center;
+    }
+
+    .instructions-text {
+        margin-top: 8px;
+        font-size: 1.15rem;
+        /* ~4pt bigger */
+        font-style: normal;
+        /* remove italics */
+        color: var(--ink);
+    }
+
+    /* Key Range should NOT expand */
+    .group[data-role="key-range"] {
+        flex: 0 0 auto;
+    }
+
+    /* Make Double Length match height of Scale/Spacing */
+    .group[data-role="double-length"] {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        align-items: center;
+    }
+
+    #row3 .group[data-role="double-length"] {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    svg {
+        filter:
+            contrast(1.03) brightness(0.995);
+    }
