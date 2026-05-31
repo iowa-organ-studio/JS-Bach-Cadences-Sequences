@@ -244,7 +244,7 @@ export function buildNewFigure(original, newNotes) {
 
     // Replace standalone accidental
     if (hasStandalone && standaloneIndex < accs.length) {
-        const newAcc = accs[standaloneIndex] || 'n';
+        const newAcc = acc ? (accs[explicitIndex++] || 'n') : '';
         result = result.replace(/(?<!\d)(--|##|#|-|n)(?!\d)/, newAcc);
     }
 
