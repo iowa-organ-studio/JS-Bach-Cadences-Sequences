@@ -229,22 +229,18 @@ export function buildNewFigure(original, newNotes) {
 
     const accs = newNotes.split(' ').map(n => n.slice(1));
     let explicitIndex = 0;
-    let standaloneIndex = -1;
 
-    // Find which index in accs corresponds to the standalone accidental
     const hasStandalone = /(?<!\d)(--|##|#|-|n)(?!\d)/.test(original);
     const explicitCount = [...original.matchAll(/(\d+)(--|##|#|-|n)?/g)].length;
-    if (hasStandalone) standaloneIndex = explicitCount; // it's appended last by parseFigurePairs
+    const standaloneIndex = hasStandalone ? explicitCount : -1;
 
-    // Replace digit+attached_accidental pairs
-    let result = original.replace(/(\d+)(--|##|#|-|n)?/g, (_, num, acc) => {
-        const newAcc = acc != null ? (accs[explicitIndex++] || 'n') : '';
+    let result = original.replace(/(\d+)(--|##|#|-|n)?/g, (_, num, attachedAcc) => {
+        const newAcc = attachedAcc ? (accs[explicitIndex++] || 'n') : '';
         return num + newAcc;
     });
 
-    // Replace standalone accidental
     if (hasStandalone && standaloneIndex < accs.length) {
-        const newAcc = acc ? (accs[explicitIndex++] || 'n') : '';
+        const newAcc = accs[standaloneIndex] || 'n';
         result = result.replace(/(?<!\d)(--|##|#|-|n)(?!\d)/, newAcc);
     }
 
