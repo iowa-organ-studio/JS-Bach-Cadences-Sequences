@@ -2,7 +2,7 @@
 !!		actual acc.	force diatonic accidental
 !! Title	Descending Sequence of Six Chords
 !! Number	1
-!! Instructions: For the first group of six chords, the six may be doubled, but for the second group, the octave may be taken. Alternate these throughout.
+!! Instructions: For the first group of six chords, if you double the 6, for the next group, you'll have to double the octave (and vice versa). Alternate these throughout.
 *clefF4	*	*	*
 *k	*k	*k	*k
 *met(c)	*met(c)	*met(c)	*met(c)
