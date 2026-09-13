@@ -750,6 +750,17 @@
         width: auto;
     }
 
+
+/* Wider finger targets for Scale / Spacing +/- buttons.
+   Keep the existing height unchanged. */
+#scaleMinus,
+#scalePlus,
+#spacingMinus,
+#spacingPlus {
+    width: 60px;
+    border-radius: 6px;
+}
+
     svg {
         filter:
             contrast(1.03) brightness(0.995);
