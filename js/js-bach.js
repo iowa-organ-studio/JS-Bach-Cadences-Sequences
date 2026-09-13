@@ -46,6 +46,7 @@ let enabledCounts =
 
 let currentScale = 50;
 let currentSpacing = 0.32;
+let doubleLength = true;
 
 let allowedTonicBases =
     new Set();
@@ -636,6 +637,11 @@ async function renderCurrent() {
             figuresAbove
         );
 
+    currentKrnSentToVerovio =
+        applyDoubleLength(
+            currentKrnSentToVerovio
+        );
+
     await renderKrn(
         toolkit,
         currentKrnSentToVerovio,
@@ -771,6 +777,7 @@ function updateKeyPill() {
 
     const prettyKey =
         tonic
+            .replace(/b/g, '♭')
             .replace(/-/g, '♭')
             .replace(/#/g, '♯');
 
@@ -779,7 +786,6 @@ function updateKeyPill() {
             'keyPillValue'
         )
         .textContent =
-
         `${prettyKey} ${originalKeyMode}`;
 }
 
@@ -790,6 +796,128 @@ function updateTitlePill() {
         )
         .textContent =
         `${currentGenre} ${currentNumber}`;
+}
+
+function applyDoubleLength(krnText) {
+
+    if (!doubleLength) {
+        return krnText;
+    }
+
+    const lines =
+        krnText.split(/\r?\n/);
+
+    // Find the actual **kern spine rather than assuming it is column 0.
+    // Other spines may contain numbers (especially figured bass), and those
+    // numbers must never be altered.
+    let kernIndex = -1;
+
+    for (const line of lines) {
+
+        if (!line.includes('**')) {
+            continue;
+        }
+
+        const fields =
+            line.split('\t');
+
+        kernIndex =
+            fields.findIndex(
+                field => field.trim() === '**kern'
+            );
+
+        if (kernIndex >= 0) {
+            break;
+        }
+    }
+
+    if (kernIndex < 0) {
+        return krnText;
+    }
+
+    return lines
+        .map(line => {
+
+            const fields =
+                line.split('\t');
+
+            return fields
+                .map((token, index) => {
+
+                    // Meter symbols.
+                    if (token === '*met(c)') {
+                        return '*M4/2';
+                    }
+
+                    if (token === '*met(c|)') {
+                        return '*M2/1';
+                    }
+
+                    // Explicit Humdrum time signatures:
+                    // 4/4 -> 4/2, 3/8 -> 3/4, etc.
+                    const meterMatch =
+                        token.match(/^\*M(\d+)\/(\d+)$/);
+
+                    if (meterMatch) {
+
+                        const numerator =
+                            Number(meterMatch[1]);
+
+                        const denominator =
+                            Number(meterMatch[2]);
+
+                        if (
+                            denominator >= 2 &&
+                            denominator % 2 === 0
+                        ) {
+                            return `*M${numerator}/${denominator / 2}`;
+                        }
+                    }
+
+                    if (index !== kernIndex) {
+                        return token;
+                    }
+
+                    // Humdrum **kern reciprocal durations:
+                    // 8 = eighth, 4 = quarter, 2 = half, 1 = whole,
+                    // 0 = breve. Doubling the musical duration therefore
+                    // halves the reciprocal value, with whole notes becoming
+                    // breves.
+                    const durationMatch =
+                        token.match(/^(\d+)(.*)$/);
+
+                    if (!durationMatch) {
+                        return token;
+                    }
+
+                    const reciprocal =
+                        Number(durationMatch[1]);
+
+                    // Once the original eighth-note groups are lengthened,
+                    // their old L/J beam markers would incorrectly tell Verovio
+                    // to keep them beamed. Double Length removes those beam
+                    // markers so 8th notes genuinely become independent quarter
+                    // notes, rather than merely keeping the old beam appearance.
+                    const suffix =
+                        durationMatch[2]
+                            .replace(/[LJ]/g, '');
+
+                    if (reciprocal === 1) {
+                        return `0${suffix}`;
+                    }
+
+                    if (
+                        reciprocal > 1 &&
+                        reciprocal % 2 === 0
+                    ) {
+                        return `${reciprocal / 2}${suffix}`;
+                    }
+
+                    return token;
+                })
+                .join('\t');
+        })
+        .join('\n');
 }
 
 function updateScaleSpacingDisplays() {
@@ -1402,6 +1530,50 @@ async function main() {
         }
     );
 
+    function updateDoubleLengthButtons() {
+
+        const off =
+            document.getElementById(
+                'labelDLOff'
+            );
+
+        const on =
+            document.getElementById(
+                'labelDLOn'
+            );
+
+        off.classList.toggle(
+            'selected',
+            !doubleLength
+        );
+
+        on.classList.toggle(
+            'selected',
+            doubleLength
+        );
+    }
+
+    document
+        .querySelectorAll(
+            'input[name="doubleLength"]'
+        )
+        .forEach(radio => {
+
+            radio.addEventListener(
+                'change',
+                async () => {
+
+                    doubleLength =
+                        radio.value === 'on';
+
+                    updateDoubleLengthButtons();
+
+                    await renderCurrent();
+                }
+            );
+        });
+
+    updateDoubleLengthButtons();
     updateFbModeButtons();
     updateFigurePlacementButtons();
     wireKeyButtons();
