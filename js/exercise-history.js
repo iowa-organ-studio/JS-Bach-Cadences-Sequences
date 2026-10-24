@@ -34,7 +34,9 @@ function render(){
   if(!selected.length){content.textContent="No recorded bass lines yet.";return}
   const rows=new Map();let skipped=0;
   for(const a of selected){const key=normalizeKey(a.key);if(!key){skipped++;continue}
-    const name=String(a.exercise||"Unknown exercise");if(!rows.has(name))rows.set(name,new Map());
+    const rawName=String(a.exercise||"Unknown exercise");
+    const name=activeApp==="cpe-bach" ? rawName.replace(/^C\.?\s*P\.?\s*E\.?\s*Bach\s*[—–:-]\s*/i, "") : rawName;
+    if(!rows.has(name))rows.set(name,new Map());
     const counts=rows.get(name);counts.set(key,(counts.get(key)||0)+1);
   }
   const table=document.createElement("table");table.className="exercise-history-table";
