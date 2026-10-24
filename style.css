@@ -182,3 +182,12 @@ footer{background:#f4f4f4;color:#111}
 .practice-sidebar .category{font-size:15px;padding:12px 3px}
 @media(max-width:760px){.practice-grid{grid-template-columns:minmax(0,1fr) minmax(170px,.32fr);gap:9px}.practice-sidebar{gap:9px}.practice-sidebar .keycard svg{max-width:165px}.practice-sidebar .display{padding:10px}.practice-sidebar .category{font-size:12px;padding:9px 2px}}
 @media(max-width:540px){.practice-grid{grid-template-columns:1fr}.practice-grid .music,.practice-grid.cadence-active .music,.practice-grid.sequence-active .music{grid-column:1;grid-row:1}.practice-sidebar{grid-column:1;grid-row:2}.practice-sidebar .keycard svg{max-width:205px}}
+
+/* Composer practice-history navigation */
+.composer-history-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.composer-history-tabs button{border:1px solid #ccc;background:#f6f6f6;color:#222;border-radius:9px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer}
+.composer-history-tabs button.active{background:var(--history-accent,#333);color:#fff;border-color:var(--history-accent,#333)}
+.composer-history-tabs button:focus-visible{outline:2px solid #222;outline-offset:2px}
+.top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+
+body{--history-accent:#8C3028;}
