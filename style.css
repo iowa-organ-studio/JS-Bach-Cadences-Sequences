@@ -1,767 +1,184 @@
-    :root {
-
-        /* ===== J.S. Bach / oxblood palette ===== */
-
-        --bg: #efe7df;
-        /* warm parchment */
-
-        --card: #f8f4ee;
-        /* manuscript paper */
-
-        --border: #9d8577;
-        /* warm archival border */
-
-        --ink: #191411;
-        /* engraving ink */
-
-        --muted: #5f4d46;
-        /* faded sepia-red */
-
-        /* Main accent family */
-        --gold: #6e2f2f;
-        /* oxblood */
-
-        --gold-light: #a14b4b;
-        /* illuminated red */
-
-        --selected-bg: #dcc0b7;
-        /* dusty rose parchment */
-
-        --selected-border: #7b3535;
-
-        --selected-ink: #1b1412;
-
-        --grey: #e8ddd5;
-
-        /* compatibility aliases */
-        --butter: var(--selected-bg);
-        --gold-ink: var(--selected-ink);
-    }
-
-    html,
-    body {
-        height: 100%
-    }
-
-    body {
-
-        font-family: "Source Sans 3", sans-serif;
-        margin: 12px;
-        background-color: var(--bg);
-
-
-        color: var(--ink)
-    }
-
-    .card {
-        background: var(--card);
-
-        border: 1px solid var(--border);
-
-        border-radius: 4px;
-
-        padding: 10px;
-
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.45),
-            0 1px 2px rgba(0, 0, 0, 0.06);
-    }
-
-    header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap
-    }
-
-    .small {
-        font-size: .9rem;
-        color: var(--muted)
-    }
-
-    .row {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap
-    }
-
-    .spacer {
-        flex: 1
-    }
-
-    /* ======= Title pills ======= */
-    .title-badges {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        flex-wrap: wrap
-    }
-
-    .title-pill {
-        padding: 6px 10px;
-        border-radius: 10px;
-        background: #fff;
-        border: 1px solid var(--border);
-        font-family: "Cormorant Garamond", serif;
-        letter-spacing: 0.02em;
-        font-size: 1.05rem;
-        font-size: .92rem;
-        font-weight: 600;
-        white-space: nowrap
-    }
-
-    #keyPill {
-        display: inline-block;
-    }
-
-    .title-pill small {
-        color: var(--muted);
-        font-weight: 500;
-        margin-left: 6px
-    }
-
-    /* Make header a flex row and vertically center items */
-    header {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        /* optional spacing between items */
-        padding: 8px 12px;
-        /* adjust to match your layout */
-    }
-
-    /* Right-align the studio credit pill in the header */
-    .studio-credit-pill {
-        margin-left: auto;
-        /* pushes this pill to the far right in the header flex row */
-        white-space: nowrap;
-        /* keep it on one line if possible */
-        font-weight: 600;
-        /* same visual weight as the other pills */
-        display: inline-flex;
-        /* keeps vertical centering consistent */
-        align-items: center;
-    }
-
-    /* Push the studio credit to the far right */
-    .studio-credit {
-        margin-left: auto;
-        /* the magic that forces it to the right */
-        font-weight: 700;
-        /* keep your bold weight */
-        white-space: nowrap;
-        /* prevent awkward wrapping on wide screens */
-        font-size: 0.95rem;
-        /* tweak to taste */
-    }
-
-    /* Responsive: on narrow screens, wrap and make the credit full width and right aligned */
-    @media (max-width: 640px) {
-        header {
-            flex-wrap: wrap;
-            /* allow items to break to next line */
-            gap: 6px;
-        }
-
-        .studio-credit {
-            margin-left: 0;
-            /* remove auto so it no longer tries to occupy flex gap */
-            order: 3;
-            /* put it after other header items (adjust if needed) */
-            width: 100%;
-            /* full width line */
-            text-align: right;
-            /* keep the text visually right-justified on its own line */
-            padding-top: 6px;
-            /* tiny spacing from row above */
-        }
-    }
-
-    /* ===== Row: Category + Accidentals ===== */
-    #rowCategories {
-        display: flex;
-        gap: 8px;
-        margin-top: 6px;
-        align-items: flex-start;
-    }
-
-    /* Make both cards shrink to content */
-    #rowCategories .group {
-        flex: 0 0 auto;
-        width: auto;
-        white-space: nowrap;
-    }
-
-    /* ======= Buttons ======= */
-    .btn {
-
-        padding: 4px 8px;
-
-        border-radius: 4px;
-
-        border: 1px solid var(--border);
-
-        background: var(--grey);
-
-        color: var(--ink);
-
-        cursor: pointer;
-
-        font-size: .82rem;
-
-        line-height: 1;
-
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.4);
-
-        transition: 0.1s ease;
-    }
-
-    /* Selected / toggled states across the app (chips, radios, etc.) */
-    .btn.selected,
-    .level-btn.toggled,
-    .level-btn.selected,
-    .include-btn.toggled,
-    .radio-inline label.selected,
-    [data-role="show"] .level-btn.toggled {
-        background: var(--selected-bg);
-        border-color: var(--selected-border);
-        color: var(--selected-ink);
-    }
-
-    /* Make the select all/none buttons black (not grey) */
-    #selectAllKeys,
-    #selectNoneKeys,
-    #includeSelectAll,
-    #includeSelectNone {
-        color: var(--ink);
-        background: #fff;
-        border-color: var(--border);
-        font-weight: 600;
-    }
-
-    /* ======= Chips container line ======= */
-    .line {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 8px
-    }
-
-    .group {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        background: #f8f3e8;
-
-        border: 1px solid var(--border);
-
-        border-radius: 4px;
-
-        padding: 6px 8px;
-
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.35);
-    }
-
-    .group .small {
-
-        font-family: "Cormorant Garamond", serif;
-
-        font-size: .95rem;
-
-        font-weight: 700;
-
-        letter-spacing: 0.03em;
-
-        color: #4a3d2d;
-    }
-
-    /* ======= Row 1 ======= */
-    .new-bass-btn {
-
-        padding: 8px 14px;
-
-        border-radius: 4px;
-
-        background:
-            linear-gradient(to bottom,
-                #9e3e3e,
-                #7c2d2d);
-
-        color: #f8f4ef;
-
-        border: 1px solid #5e1f1f;
-
-        font-family: "Cormorant Garamond", serif;
-
-        font-size: 1.12rem;
-
-        letter-spacing: 0.04em;
-
-        font-weight: 700;
-
-        cursor: pointer;
-
-        box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.14),
-            0 2px 5px rgba(0, 0, 0, 0.18);
-
-        transition: 0.12s ease;
-    }
-
-    .new-bass-btn:hover {
-
-        background:
-            linear-gradient(to bottom,
-                #b24747,
-                #8a3232);
-
-        transform: translateY(-1px);
-    }
-
-    .new-bass-btn:active {
-
-        background:
-            linear-gradient(to bottom,
-                #682424,
-                #531919);
-
-        transform: translateY(1px);
-    }
-
-    #keyPill .key-label {
-        font-weight: 700;
-        /* bold label */
-        margin-right: 4px;
-    }
-
-    #keyPill #keyPillValue {
-        font-weight: 400;
-        /* normal-weight key name */
-    }
-
-    /* ======= Viewer ======= */
-    #viewer {
-        margin-top: 8px;
-    }
-
-    /* Tagline image under the viewer */
-    #modeTagline img.tagline-img {
-        max-height: 101px;
-        /* adjust if you want larger/smaller */
-        height: auto;
-        display: block;
-        margin: 2px 0 0 0;
-        /* left-justified (no auto-centering) */
-    }
-
-    #viewer.card {
-
-        padding-top: 14px;
-
-        padding-bottom: 14px;
-
-        background: #ffffff;
-
-        border: 1px solid #d9d9d9;
-
-        border-radius: 2px;
-
-        box-shadow:
-            0 1px 2px rgba(0, 0, 0, 0.03);
-    }
-
-    /* Slightly smaller gap above the viewer card */
-    #viewer {
-        margin-top: 4px;
-    }
-
-
-    /* Verovio fit-to-viewer helpers */
-    #viewer {
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
-
-    #svg {
-
-        display: block;
-
-        background: #ffffff;
-    }
-
-    #svg svg {
-
-        display: block;
-
-        width: auto;
-        height: auto;
-
-        margin: 0;
-
-        background: #ffffff;
-    }
-
-    /* Keep historical text in DOM (for JS to touch) but invisible */
-    .visually-hidden {
-        position: absolute !important;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-    }
-
-    /* ---------------------------------------------------------- */
-    /* Hide UI elements completely (NO layout space, JS-safe)     */
-    /* Use this instead of visibility:hidden                      */
-    .hidden-layout {
-        display: none !important;
-    }
-
-    /* ---------------------------------------------------------- */
-
-    /* ======= Row 3: Key Range + Scale + Spacing (no outer big card) ======= */
-    .key-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        gap: 6px;
-    }
-
-    .key-btn {
-        background: var(--grey);
-        border: 1px solid var(--border);
-        color: #222;
-        padding: 6px 8px;
-        border-radius: 10px;
-        font-weight: 500;
-        cursor: pointer;
-        min-width: 36px;
-        min-height: 28px;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset;
-        font-size: .75rem;
-        line-height: 1.0
-    }
-
-    .key-btn.selected {
-        background: var(--butter);
-        border-color: var(--gold);
-        color: var(--gold-ink)
-    }
-
-    .small-pill {
-        background: #fff;
-        border: 1px solid var(--border);
-        padding: 4px 7px;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: .82rem;
-        line-height: 1
-    }
-
-    /* Hide the sliders visually (keep in DOM for existing JS) */
-    .slider {
-        display: none !important;
-    }
-
-    /* ======= Row 4: Filters (no big outer card) ======= */
-    /* Hide labels “Dir:”, “Mode:”, “Lvl:” per request */
-    .group[data-role="key-mode"] .small,
-    .group[data-role="category"] .small,
-    .group[data-role="level"] .small {
-        display: none
-    }
-
-    /* Accidentals radios styled to look like chips, mutually exclusive by native radio */
-    .radio-inline {
-        display: flex;
-        align-items: center;
-        gap: 6px
-    }
-
-    .radio-inline input[type="radio"] {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0
-    }
-
-    .radio-inline label {
-        padding: 4px 8px;
-        border-radius: 4px;
-        border: 1px solid var(--grey);
-        background: var(--grey);
-        color: #222;
-        font-size: .82rem;
-        line-height: 1;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .radio-inline label.selected {
-        background: var(--butter);
-        border-color: var(--gold);
-        color: var(--gold-ink)
-    }
-
-    /* NEW: Keep the FB placement card tidy and chip-highlight the selected label */
-    .group[data-role="fig-place"] {
-        /* already top-aligned via inline; keep here for clarity */
-    }
-
-    #figPlaceInline label.selected {
-        background: var(--butter);
-        border-color: var(--gold);
-        color: var(--gold-ink);
-    }
-
-    /* If you ever show native radios, this accent helps. Your radios are hidden, so optional. */
-    input[type="radio"] {
-        accent-color: var(--gold);
-    }
-
-    /* ======= Include spelled-tonics grid (replaces previous pc-grid) ======= */
-    .include-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        max-width: 720px
-    }
-
-    .include-btn {
-        padding: 6px 8px;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: #fff;
-        color: var(--ink);
-        cursor: pointer;
-        font-size: .82rem;
-        font-weight: 600;
-    }
-
-    .include-btn.toggled {
-        background: var(--butter);
-        border-color: var(--gold);
-        color: var(--gold-ink)
-    }
-
-    /* ======= Transpose/Octave/Enharmonic — keep in DOM, hide visually ======= */
-    .controls-row {
-        display: none !important;
-    }
-
-    /* ======= Humdrum collapse helper ======= */
-    .humdrum-toggle {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #fff;
-        border: 1px solid var(--border);
-        color: #333;
-        border-radius: 10px;
-        padding: 6px 10px;
-        font-size: .92rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 8px
-    }
-
-    .humdrum-toggle:hover {
-        background: #fdfdfd
-    }
-
-    .humdrum-chevron {
-        font-weight: 800;
-        color: #555
-    }
-
-    .humdrum-original-label {
-        display: none !important
-    }
-
-    /* ======= Logo ======= */
-    #logoAfterFilters img {
-        max-width: 66%;
-        height: auto;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /* Unified selected state for all chips/buttons */
-    .key-btn.selected,
-    .include-btn.toggled,
-    .btn.selected,
-    .level-btn.toggled,
-    .radio-inline label.selected,
-    [data-role="show"] .level-btn.toggled {
-        background: var(--selected-bg) !important;
-        border-color: var(--selected-border) !important;
-        color: var(--selected-ink) !important;
-    }
-
-    /* Base state: soft silver-grey, not white */
-    .key-btn,
-    .include-btn,
-    .level-btn,
-    .btn,
-    .radio-inline label {
-        background: var(--grey);
-        border-color: var(--border);
-        color: var(--ink);
-    }
-
-    /* ===== Scoreboard ===== */
-    #scoreTable {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    #scoreTable th,
-    #scoreTable td {
-        border: 1px solid var(--border);
-        padding: 4px 6px;
-        font-size: .82rem;
-        text-align: center;
-        font-variant-numeric: tabular-nums;
-    }
-
-    /* Highlight grand total cell */
-    .grand-total-cell {
-        background: var(--selected-bg);
-        border-color: var(--selected-border);
-        color: var(--selected-ink);
-        font-weight: 700;
-        font-style: normal;
-    }
-
-    #scoreTable thead th {
-        background: var(--card);
-    }
-
-    #scoreTable th:first-child,
-    #scoreTable td:first-child {
-        text-align: left;
-        white-space: nowrap;
-        font-weight: 700;
-    }
-
-    /* === Scoreboard totals styling === */
-    #scoreTable tr.totals-row th,
-    #scoreTable tr.totals-row td {
-        font-style: italic;
-    }
-
-    #scoreTable th.totals-col,
-    #scoreTable td.totals-col {
-        font-style: italic;
-    }
-
-    #scoreTable th:first-child,
-    #scoreTable td:first-child {
-        width: auto;
-        white-space: nowrap;
-    }
-
-    /* ---------------------------------------------------------- */
-    /* Double Length card — shrink-wrap to label + Off/On only   */
-    /* ---------------------------------------------------------- */
-    .group[data-role="double-length"] {
-        display: inline-flex;
-        /* prevents block stretching */
-        flex: 0 0 auto;
-        /* do NOT grow or shrink */
-        width: max-content;
-        /* exact width of contents */
-        white-space: nowrap;
-        /* keep label + radios inline */
-        align-items: center;
-        padding-top: 8px;
-        padding-bottom: 8px;
-        /* match Scale/Spacing height */
-    }
-
-    /* ===== Row 3 layout FIX ===== */
-
-    /* Keep everything on one row */
-    #row3 {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-    }
-
-    .group[data-role="key-range"] {
-        flex: 0 1 auto;
-        /* allow shrinking but NOT growing */
-        min-width: 0;
-    }
-
-    /* Keep Scale + Spacing compact */
-    .group[data-role="scale"],
-    .group[data-role="spacing"] {
-        flex: 0 0 auto;
-    }
-
-    /* Double Length = small, fixed-size card */
-    .group[data-role="double-length"] {
-        flex: 0 0 auto;
-        white-space: nowrap;
-    }
-
-    /* Force Row 3 to behave like a single toolbar */
-    #row3 {
-        display: flex;
-        align-items: center;
-    }
-
-    .instructions-text {
-        margin-top: 8px;
-        font-size: 1.15rem;
-        /* ~4pt bigger */
-        font-style: normal;
-        /* remove italics */
-        color: var(--ink);
-    }
-
-    /* Key Range should NOT expand */
-    .group[data-role="key-range"] {
-        flex: 0 0 auto;
-    }
-
-    /* Make Double Length match height of Scale/Spacing */
-    .group[data-role="double-length"] {
-        padding-top: 8px;
-        padding-bottom: 8px;
-        align-items: center;
-    }
-
-    #row3 .group[data-role="double-length"] {
-        flex: 0 0 auto;
-        width: auto;
-    }
-
-
-/* Wider finger targets for Scale / Spacing +/- buttons.
-   Keep the existing height unchanged. */
-#scaleMinus,
-#scalePlus,
-#spacingMinus,
-#spacingPlus {
-    width: 60px;
-    border-radius: 6px;
+*{box-sizing:border-box}body{margin:0;background:#fffdf5;color:#171717;font-family:system-ui,-apple-system,Segoe UI,sans-serif}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,[role=button]:focus-visible{outline:3px solid #777;outline-offset:3px}[hidden]{display:none!important}.top{background:#ffcd00;border-bottom:2px solid #000;display:flex;align-items:center;justify-content:space-between;padding:14px max(20px,calc((100vw - 1100px)/2));gap:15px}.identity{display:flex;align-items:center;gap:12px}.mark{width:50px;height:50px;background:#000;color:#ffcd00;border-radius:12px;display:grid;place-items:center;font-size:30px}.identity h1{font-size:29px;line-height:1.05;margin:0;font-weight:850}.identity small{font-size:10px;letter-spacing:1.3px;font-weight:800}.outline{background:white;border:1px solid #bbb;border-radius:11px;padding:10px 15px;font-weight:750}main{max-width:1100px;margin:auto;padding:25px 20px 45px}.card{background:#fff;border:1px solid #e9e9e9;border-radius:20px;padding:20px;box-shadow:0 3px 0 #eeede9}.pills{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.pill{background:#fff2b5;border-radius:13px;padding:8px 14px;font-weight:750}.score{min-height:210px;background:#fafafa;border-radius:12px;padding:15px;margin:17px 0;overflow-x:auto}.score svg{display:block;max-width:100%;height:auto}.new{width:100%;background:#ffcd00;border:0;border-radius:12px;padding:14px;font-weight:850;font-size:17px;box-shadow:0 3px 0 #d4a900}.new:disabled{opacity:.45;cursor:not-allowed}.new:active{transform:translateY(2px);box-shadow:none}#status{min-height:16px;color:#666;font-size:12px;margin:10px 0 0}.settings{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}.settings h2{font-size:20px;margin:0 0 5px}.keycard{text-align:center}.muted{color:#777;font-size:13px;margin:0}.keycard svg{width:100%;max-width:320px;display:block;margin:12px auto 0}.keycard #keyCount{color:#666;font-size:13px}.wheel-segment{cursor:pointer}.wheel-number{pointer-events:none;font-family:'Arial Rounded MT Bold',Arial,sans-serif;font-weight:1000;paint-order:stroke;stroke:#fff;stroke-width:7;stroke-linejoin:round;filter:drop-shadow(1px 3px 0 #aaa)}.display{padding:25px}.control{margin:35px 0}.control label{display:flex;justify-content:space-between;font-weight:700}.control output{font-weight:500;color:#666}.control input{display:block;width:100%;accent-color:#e5b700;margin-top:20px}.bottom{display:flex;justify-content:space-between;align-items:center;margin:25px 0;color:#666;font-size:13px;gap:12px}footer{background:#111;color:#ffcd00;text-align:center;padding:20px;font-size:12px;letter-spacing:1px;font-weight:800}.login{background:#fff4c9;border:1px solid #e0bf4a;border-radius:14px;padding:18px;margin-bottom:20px}.loginhead{display:flex;justify-content:space-between}.loginhead button{border:0;background:transparent}.login p{font-size:14px;margin-bottom:0}@media(max-width:680px){.settings{grid-template-columns:1fr}.top{padding:12px}.identity h1{font-size:24px}.mark{width:42px;height:42px}.outline{padding:8px}.bottom{flex-wrap:wrap}}
+/* Compact two-row practice layout */
+.top-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:18px;align-items:stretch}
+.top-grid .music{min-width:0;display:flex;flex-direction:column}
+.top-grid .score{min-height:180px;flex:1}
+.top-grid .keycard{padding:18px 12px}
+.top-grid .keycard svg{max-width:280px;margin:8px auto 0}
+.top-grid .keycard h2{font-size:19px}
+.top-grid .keycard #keyCount{margin:7px 0 0}
+.settings{margin-top:18px}
+.settings .card{min-width:0}
+.display .control{margin:27px 0}
+.options{padding:25px}
+.option-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:24px 0;flex-wrap:wrap}
+.option-row>span{font-weight:700}
+.choices{display:inline-flex;background:#f3f3f3;border-radius:11px;padding:4px;gap:3px}
+.choices button{border:0;background:transparent;padding:9px 12px;border-radius:8px;font-weight:750;color:#555}
+.choices button.active{background:#ffcd00;color:#000;box-shadow:0 2px 0 #d4aa00}
+@media(max-width:760px){.top-grid{grid-template-columns:1fr}.top-grid .keycard svg{max-width:290px}}
+
+/* Signature stays below the Verovio SVG, outside its render target. */
+.score{display:flex;flex-direction:column}
+.score #svg{flex:1;min-width:0}
+.signature{display:flex;justify-content:center;align-items:center;padding:10px 8px 3px}
+.signature img{width:min(100%,420px);height:auto;object-fit:contain}
+.bottom{justify-content:flex-end}
+footer{display:flex;justify-content:center;align-items:center;padding:20px}
+footer img{width:min(100%,330px);height:auto}
+
+/* Branding and student practice */
+footer{background:#f4f4f4;border-top:1px solid #e1e1e1}
+.login form label{display:block;font-weight:700;font-size:13px;margin:12px 0 7px}
+.login-form-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.login-form-row input{border:1px solid #bbb;border-radius:9px;padding:12px;min-width:180px;flex:1;background:#fff}
+.login-submit{width:auto;box-shadow:none;font-size:14px}
+#studentLoggedIn{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:12px}
+#studentLoginMessage{min-height:1em}
+#exerciseHistoryDialog{border:1px solid #ddd;border-radius:18px;width:min(1050px,95vw);max-height:85vh;padding:22px;background:white;color:#171717}
+#exerciseHistoryDialog::backdrop{background:rgba(0,0,0,.5)}
+.history-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}
+.history-head h2{margin:0}
+.exercise-history-scroll{max-width:100%;overflow:auto;max-height:65vh}
+.exercise-history-table{border-collapse:collapse;font-size:12px;white-space:nowrap}
+.exercise-history-table th,.exercise-history-table td{border:1px solid #ddd;padding:6px 9px;text-align:center}
+.exercise-history-table th:first-child,.exercise-history-table td:first-child{text-align:left;position:sticky;left:0;background:white}
+.exercise-history-table thead th{position:sticky;top:0;background:#ffed9a;z-index:1}
+.exercise-history-table thead th:first-child{z-index:2}
+.history-totals-row{font-weight:800;background:#fff4c5}
+.history-totals-row td:first-child{background:#fff4c5}
+
+/* Version 5: compact header and music, difficulty wheel beside combined controls. */
+.identity small{display:none}
+.top{padding-top:9px;padding-bottom:9px}
+main{padding-top:12px}
+.top-grid .music{padding-top:10px}
+.top-grid .keycard{padding-top:9px}
+.top-grid .keycard h2{margin-top:2px}
+.top-grid .keycard svg{margin-top:3px}
+.music .score{margin-top:9px}
+.settings{grid-template-columns:1fr 1fr;align-items:stretch}
+.difficulty-card{text-align:center;padding:14px 12px}
+.difficulty-card h2{margin:0;font-size:19px}
+.difficulty-card svg{display:block;width:100%;max-width:320px;margin:6px auto 0}
+.settings .display{padding:18px 20px}
+.settings .display .control{margin:20px 0}
+.settings .options{border-top:1px solid #ececec;margin-top:16px;padding-top:14px}
+.settings .options h2{font-size:19px}
+.settings .option-row{margin:15px 0}
+@media(max-width:760px){main{padding:9px 10px 25px}.top-grid,.settings{gap:10px}.top-grid .music{padding:10px}.top-grid .keycard{padding:9px}.top-grid .score{min-height:140px}.top-grid .keycard svg{max-width:250px}.settings{margin-top:10px}.settings .display{padding:15px}.difficulty-card svg{max-width:250px}.score{padding:8px}.mark{width:36px;height:36px;font-size:23px}.identity h1{font-size:24px}}
+
+/* Version 6: compact, balanced settings card. */
+.settings .display{padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.settings .display .control{margin:0 0 9px}
+.settings .display .control input{margin-top:9px}
+.settings .options{margin-top:0;padding-top:10px}
+.settings .option-row{margin:9px 0;gap:8px}
+.settings .choices button{padding:7px 10px}
+@media(max-width:760px){.settings .display{padding:12px 14px;gap:7px}.settings .option-row{margin:8px 0}}
+
+/* Version 7: mobile-height optimization, natural music/signature flow. */
+.top{padding-top:5px;padding-bottom:5px}
+.mark{width:38px;height:38px;border-radius:9px;font-size:23px}
+.identity{gap:9px}
+.identity h1{font-size:23px}
+.top .outline{padding:7px 11px}
+.top-grid{align-items:start}
+.top-grid .music{padding-top:8px}
+.top-grid .score{flex:none;min-height:0;margin:8px 0 10px;padding:9px 10px 5px}
+.score #svg{flex:none}
+.signature{padding:2px 5px 0}
+.signature img{display:block;width:min(100%,420px)}
+.top-grid .keycard{padding-top:7px}
+.top-grid .keycard svg{margin-top:1px}
+footer img{width:min(100%,660px)}
+@media(max-width:760px){
+ .top{padding:5px 10px}
+ .mark{width:34px;height:34px;font-size:21px}
+ .identity h1{font-size:21px}
+ .top-grid .score{min-height:0;margin:7px 0 9px;padding:7px 8px 3px}
+ .signature{padding:0 3px}
+ .top-grid .music{padding-top:8px}
+ .top-grid .keycard{padding-top:7px}
+ footer{padding:14px 12px}
 }
 
-    svg {
-        filter:
-            contrast(1.03) brightness(0.995);
-    }
+/* Version 8: align music and key cards without changing shared rendering. */
+.top-grid{align-items:stretch}
+.top-grid .keycard{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:0}
+.top-grid .keycard h2{margin:0 0 3px}
+.top-grid .keycard #keyWheel{width:100%;display:flex;justify-content:center;align-items:center;flex:1;min-height:0}
+.top-grid .keycard svg{width:100%;max-width:215px;height:auto;margin:0 auto}
+.top-grid .keycard #keyCount{margin:3px 0 0}
+.signature{padding-top:12px;padding-bottom:1px}
+/* Do not show a rectangular focus outline on the SVG wedges. */
+.wheel-segment:focus,.wheel-segment:focus-visible{outline:none}
+.wheel-segment:focus-visible path{filter:brightness(.91)}
+@media(max-width:760px){.top-grid .keycard svg{max-width:205px}.signature{padding-top:10px}}
+
+/* J. S. Bach — Thomaskirche rib red, taken from the supplied church photograph. */
+:root{--bach-red:#8C3028;--bach-red-dark:#65201C;--bach-red-pale:#F6E7E3}
+.top{background:var(--bach-red);color:white;border-bottom-color:var(--bach-red-dark)}
+.mark{background:#fff;color:var(--bach-red)}
+.pill{background:var(--bach-red-pale)}
+.new{background:var(--bach-red);color:#fff;box-shadow:0 3px 0 var(--bach-red-dark)}
+.control input{accent-color:var(--bach-red)}
+.choices button.active{background:var(--bach-red)!important;color:white!important;border-color:var(--bach-red)!important}
+.practice-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(245px,1fr);grid-template-rows:auto 1fr;gap:14px;align-items:stretch}
+.practice-grid .music{grid-column:1;grid-row:1 / 3;display:flex;flex-direction:column;min-width:0;padding:12px 18px 16px}
+.practice-grid .music .score{flex:1;min-height:260px;margin:10px 0 12px;display:flex;flex-direction:column;justify-content:flex-start}
+.practice-grid .music #svg{flex:none}
+.practice-grid .music .signature{margin-top:auto;padding-top:18px}
+.practice-grid .music .signature img{width:min(100%,440px)}
+.practice-grid .keycard{grid-column:2;grid-row:1;padding:10px 12px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.practice-grid .keycard h2{font-size:19px;margin:0 0 4px}
+.practice-grid .keycard #keyWheel{display:flex;justify-content:center;width:100%}
+.practice-grid .keycard svg{width:100%;max-width:205px;height:auto;margin:0}
+.practice-grid .keycard #keyCount{font-size:12px;margin:4px 0 0}
+.practice-grid .display{grid-column:2;grid-row:2;padding:16px 16px 12px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.practice-grid .display .control{margin:3px 0}
+.practice-grid .display .control input{margin-top:9px}
+.practice-grid .options{margin:3px 0 0;padding-top:8px;border-top:1px solid #eee}
+.practice-grid .option-row{margin:9px 0;gap:8px}
+.category-buttons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:0 0 5px}
+.category{background:#f7f4f3;color:#4a3b39;border:2px solid #d6c9c6;border-radius:12px;font-size:17px;font-weight:850;padding:13px 5px;min-width:0}
+.category.active{background:var(--bach-red);border-color:var(--bach-red-dark);color:white;box-shadow:0 3px 0 var(--bach-red-dark)}
+.category:focus-visible{outline:3px solid #111;outline-offset:3px}
+footer{background:#f4f4f4;color:#111}
+@media(max-width:760px){.practice-grid{grid-template-columns:minmax(0,1fr) minmax(165px,.58fr);gap:9px}.practice-grid .music{padding:9px}.practice-grid .keycard{padding:8px 5px}.practice-grid .keycard svg{max-width:190px}.practice-grid .display{padding:10px;gap:8px}.category{font-size:13px;padding:10px 3px}.practice-grid .music .score{min-height:210px;padding:8px}.practice-grid .option-row{flex-wrap:wrap}}
+@media(max-width:540px){.practice-grid{grid-template-columns:1fr;grid-template-rows:auto}.practice-grid .music,.practice-grid .keycard,.practice-grid .display{grid-column:1;grid-row:auto}.practice-grid .music .score{min-height:180px}.practice-grid .keycard svg{max-width:205px}.practice-grid .display .option-row{flex-wrap:nowrap}}
+
+.exercise-history-table thead th{background:var(--bach-red-pale)}
+.history-totals-row,.history-totals-row td:first-child{background:var(--bach-red-pale)}
+.login{background:var(--bach-red-pale);border-color:#d7a49b}
+
+/* Version 2: source instructions, engraving annotations, and adaptive score height. */
+.exercise-instructions{font-size:14px;line-height:1.5;color:#303030;margin:12px 10px 3px;text-align:center;white-space:normal}
+.exercise-instructions[hidden]{display:none!important}
+.practice-grid{grid-template-rows:auto auto;align-items:start}
+.practice-grid .music{align-self:start}
+.practice-grid .music .score{flex:none;min-height:0}
+.practice-grid .music .signature{margin-top:0;padding-top:14px}
+.practice-grid .music .score #svg{flex:none}
+.practice-grid .display{align-self:start}
+.practice-grid .option-row{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:8px;margin:12px 0 16px}
+.practice-grid .option-row>span{display:block;font-weight:700}
+.practice-grid .option-row .choices{margin-left:0}
+@media(min-width:541px){
+ .practice-grid .music{grid-row:1 / 3}
+ .practice-grid.cadence-active .music{grid-row:1;min-height:0}
+ .practice-grid.cadence-active .music .score{min-height:0}
+ .practice-grid.sequence-active .music{grid-row:1 / 3}
+}
+@media(max-width:540px){.practice-grid .music,.practice-grid .keycard,.practice-grid .display{grid-row:auto}.practice-grid .music .score{min-height:0}}
+
+/* Version 3: independent sidebar stack and wider notation. */
+.practice-grid{grid-template-columns:minmax(0,1fr) minmax(215px, .265fr);grid-template-rows:auto;align-items:start;gap:14px}
+.practice-grid .music,.practice-grid.cadence-active .music,.practice-grid.sequence-active .music{grid-column:1;grid-row:1;align-self:start;min-width:0}
+.practice-sidebar{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;gap:14px;align-self:start}
+.practice-sidebar .keycard,.practice-sidebar .display{grid-column:auto;grid-row:auto;align-self:stretch;width:100%}
+.practice-sidebar .keycard svg{max-width:185px}
+.practice-sidebar .display{padding:14px 13px 12px}
+.practice-sidebar .category{font-size:15px;padding:12px 3px}
+@media(max-width:760px){.practice-grid{grid-template-columns:minmax(0,1fr) minmax(170px,.32fr);gap:9px}.practice-sidebar{gap:9px}.practice-sidebar .keycard svg{max-width:165px}.practice-sidebar .display{padding:10px}.practice-sidebar .category{font-size:12px;padding:9px 2px}}
+@media(max-width:540px){.practice-grid{grid-template-columns:1fr}.practice-grid .music,.practice-grid.cadence-active .music,.practice-grid.sequence-active .music{grid-column:1;grid-row:1}.practice-sidebar{grid-column:1;grid-row:2}.practice-sidebar .keycard svg{max-width:205px}}
